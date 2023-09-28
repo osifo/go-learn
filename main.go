@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"osifo.dev/learn-go/fileutils"
+	"osifo.dev/learn-go/structs"
 )
 
 func readFileData() {
@@ -33,6 +34,15 @@ func learnDefer() {
 	fmt.Println(age)
 }
 
+func getDeviceReadings() {
+	device001 := structs.Device{Id: "001", Name: "test_device_1"}
+	device002 := structs.NewDevice("002", "test_device_2", structs.Coordinate{"lat": 3.234, "long": 4.902})
+
+	fmt.Printf("Device data: %v", device001.GetReadings())
+	fmt.Printf("Device data: %v", device002.GetReadings())
+
+}
+
 func main() {
 	print("This is a Go function")
 	learnDefer()
@@ -40,4 +50,5 @@ func main() {
 	// RunCalculator()
 	readFileData()
 	writeDateToFile()
+	getDeviceReadings()
 }
