@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
+	"osifo.dev/learn-go/dtwin"
 	"osifo.dev/learn-go/fileutils"
-	"osifo.dev/learn-go/structs"
 )
 
 func readFileData() {
@@ -36,22 +36,31 @@ func learnDefer() {
 }
 
 func getDeviceReadings() {
-	device001 := structs.Device{Id: "001", Name: "test_device_1"}
-	device002 := structs.NewDevice("002", "test_device_2", structs.Coordinate{"lat": 3.234, "long": 4.902})
+	device001 := dtwin.Device{Id: "001", Name: "test_device_1"}
+	device002 := dtwin.NewDevice("002", "test_device_2", dtwin.Coordinate{"lat": 3.234, "long": 4.902})
 
 	fmt.Printf("Device data: %v", device001.GetReadings())
 	fmt.Printf("Device data: %v", device002.GetReadings())
 
 }
 
-func DisplayReadingWithEmbed() string {
-	device001 := structs.Device{Id: "001", Name: "test_device_1"}
-	device002 := structs.NewDevice("002", "test_device_2", structs.Coordinate{"lat": 3.234, "long": 4.902})
+func DisplayDataFromDevice() {
+	device001 := dtwin.Device{Id: "001", Name: "test_device_1"}
+	device002 := dtwin.NewDevice("002", "test_device_2", dtwin.Coordinate{"lat": 3.234, "long": 4.902})
 
-	reading1 := structs.Reading{Device: device001, Identifier: "001", Value: 150, Timestamp: time.Now()}
-	reading2 := structs.Reading{Device: device002, Identifier: "002", Value: 25, Timestamp: time.Now()}
+	reading1 := dtwin.Reading{Device: device001, Identifier: "001", Value: 150, Timestamp: time.Now()}
+	reading2 := dtwin.Reading{Device: device002, Identifier: "002", Value: 25, Timestamp: time.Now()}
 
-	return fmt.Sprintf("\nreading 1: %v\nreading 2: %v\n", reading1, reading2)
+	statusReport1 := dtwin.HealthStatus{Device: device001, Timestamp: time.Now(), IsOK: true, Status: "OK"}
+	statusReport2 := dtwin.HealthStatus{Device: device002, Timestamp: time.Now(), IsOK: false, Status: "NOK", Metadata: "al is gut! This is just a test error message"}
+
+	dataItems := [4]dtwin.Loggable{reading1, reading2, statusReport1, statusReport2}
+
+	fmt.Println("Readings from the available devices")
+
+	for _, data := range dataItems {
+		fmt.Println(data.GetData())
+	}
 }
 
 func main() {
@@ -61,6 +70,6 @@ func main() {
 	// RunCalculator()
 	readFileData()
 	writeDateToFile()
-	getDeviceReadings()
-	fmt.Println(DisplayReadingWithEmbed())
+	// getDeviceReadings()
+	DisplayDataFromDevice()
 }
