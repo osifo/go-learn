@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"osifo.dev/learn-go/fileutils"
 	"osifo.dev/learn-go/structs"
@@ -43,6 +44,16 @@ func getDeviceReadings() {
 
 }
 
+func DisplayReadingWithEmbed() string {
+	device001 := structs.Device{Id: "001", Name: "test_device_1"}
+	device002 := structs.NewDevice("002", "test_device_2", structs.Coordinate{"lat": 3.234, "long": 4.902})
+
+	reading1 := structs.Reading{Device: device001, Identifier: "001", Value: 150, Timestamp: time.Now()}
+	reading2 := structs.Reading{Device: device002, Identifier: "002", Value: 25, Timestamp: time.Now()}
+
+	return fmt.Sprintf("\nreading 1: %v\nreading 2: %v\n", reading1, reading2)
+}
+
 func main() {
 	print("This is a Go function")
 	learnDefer()
@@ -51,4 +62,5 @@ func main() {
 	readFileData()
 	writeDateToFile()
 	getDeviceReadings()
+	fmt.Println(DisplayReadingWithEmbed())
 }
