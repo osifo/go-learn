@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	cryptoapi "osifo.dev/learn-go/crypto-api/api"
 	"osifo.dev/learn-go/dtwin"
 	"osifo.dev/learn-go/fileutils"
 )
@@ -71,5 +72,7 @@ func main() {
 	readFileData()
 	writeDateToFile()
 	// getDeviceReadings()
-	DisplayDataFromDevice()
+	// DisplayDataFromDevice()
+	ratesData, _ := cryptoapi.GetRates("BTC")
+	fmt.Println(ratesData)
 }
