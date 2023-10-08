@@ -25,9 +25,9 @@
     <main>
       {{- range . -}}
         <article>
-            <h2>{{ .title }}</h2>
-            <p>{{ .description }}</p>
-            <img src="gallery/{{ .image }}"
+            <h2>{{ .Title }}</h2>
+            <p>{{ .Description }}</p>
+            <img src="gallery/{{ .Image }}"
                     fetchpriority="high" decoding="sync">
         </article>
       {{- end -}}

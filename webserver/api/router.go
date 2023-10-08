@@ -10,7 +10,7 @@ import (
 )
 
 func ApiRouter(response http.ResponseWriter, request *http.Request) {
-	reg := regexp.MustCompile(`/api/exhibitions/(?P<id>\d+)?`)
+	reg := regexp.MustCompile(`/api/exhibitions/?(?P<id>\d+)`)
 	matches := reg.FindStringSubmatch(request.URL.Path)
 
 	response.Header().Set("Content-Type", "application/json")
@@ -18,7 +18,7 @@ func ApiRouter(response http.ResponseWriter, request *http.Request) {
 	if request.Method == http.MethodGet {
 		exhibitionIndex := reg.SubexpIndex("id")
 
-		if exhibitionIndex < 0 {
+		if len(matches) < 1 { // there's always at least one element -  the url path
 			json.NewEncoder(response).Encode(data.GetAllExhibitions())
 		} else {
 			index, _ := strconv.Atoi(matches[exhibitionIndex])

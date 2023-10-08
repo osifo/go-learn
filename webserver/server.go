@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"net/http"
@@ -14,16 +13,10 @@ func index(writer http.ResponseWriter, reqeust *http.Request) {
 	writer.Write([]byte("This is the Go API Server."))
 }
 
-// func handleAPI(res http.ResponseWriter, req *http.Request) {
-// 	res.Header().Set("Content-Type", "application/json")
-
-// }
-
 func handleHTML(writer http.ResponseWriter, request *http.Request) {
 
 	template := template.Must(template.ParseFiles("./templates/index.tmpl"))
-	fmt.Printf("%v", data.GetLatestExhibition())
-	templateError := template.Execute(writer, json.NewEncoder(writer).Encode(data.GetAllExhibitions()))
+	templateError := template.Execute(writer, data.GetAllExhibitions())
 
 	if templateError != nil {
 		errMessage := fmt.Sprintf("Could not pass template. Error:\n%v\n", templateError)
