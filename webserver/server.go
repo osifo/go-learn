@@ -14,10 +14,12 @@ func index(writer http.ResponseWriter, response *http.Request) {
 }
 
 func main() {
-	http.HandleFunc("/", getHello)
-	http.HandleFunc("/hello", index)
+	server := http.NewServeMux()
 
-	err := http.ListenAndServe(":4000", nil)
+	server.HandleFunc("/", getHello)
+	server.HandleFunc("/hello", index)
+
+	err := http.ListenAndServe(":4000", server)
 	if err != nil {
 		fmt.Println("Server could not be opened on port 4000")
 	}
