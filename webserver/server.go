@@ -5,10 +5,6 @@ import (
 	"net/http"
 )
 
-func getHello(writer http.ResponseWriter, response *http.Request) {
-	writer.Write([]byte("API Server is running."))
-}
-
 func index(writer http.ResponseWriter, response *http.Request) {
 	writer.Write([]byte("This is the Go API Server."))
 }
@@ -16,7 +12,9 @@ func index(writer http.ResponseWriter, response *http.Request) {
 func main() {
 	server := http.NewServeMux()
 
-	server.HandleFunc("/", getHello)
+	website := http.FileServer(http.Dir("./public"))
+
+	server.Handle("/", website)
 	server.HandleFunc("/hello", index)
 
 	err := http.ListenAndServe(":4000", server)
