@@ -1,10 +1,5 @@
 package data
 
-import (
-	"encoding/json"
-	"fmt"
-)
-
 type Exhibition struct {
 	Title       string `json:"title"`
 	Description string `json:"description"`
@@ -34,21 +29,28 @@ var list = []Exhibition{
 	},
 }
 
-func (exhibition Exhibition) String() string {
-	json, err := json.MarshalIndent(exhibition, "", "  ")
+// func (exhibition Exhibition) String() string {
+// 	json, err := json.MarshalIndent(exhibition, "", "  ")
 
-	if err != nil {
-		return fmt.Sprintf("unable to encode exhibition as json %v\n", err)
-	}
+// 	if err != nil {
+// 		return fmt.Sprintf("unable to encode exhibition as json %v\n", err)
+// 	}
 
-	return string(json)
-}
+// 	return string(json)
+// }
 
 func GetLatestExhibition() Exhibition {
 	latest := len(list)
 	return list[latest-1]
 }
+func GetExhibitionByIndex(index int) Exhibition {
+	return list[index]
+}
 
 func GetAllExhibitions() []Exhibition {
 	return list
+}
+
+func AddNewExhibition(exhibition Exhibition) []Exhibition {
+	return append(list, exhibition)
 }
